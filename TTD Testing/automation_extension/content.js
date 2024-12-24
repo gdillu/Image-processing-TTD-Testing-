@@ -8,15 +8,15 @@ function enableAutocompleteForFloatingInputs() {
 function fillPilgrims(data) {
     enableAutocompleteForFloatingInputs();
 
-    const mainContainer = document.querySelector('.PilgrimDetails_customerDetailsContainer__CQvI0');
-    const gridsContainer = document.querySelector(".pilgrimDetails_grid-container__qwPRx");
+    const mainContainer = document.querySelector('[class*="PilgrimDetails_customerDetailsContainer"]');
+    const gridsContainer = document.querySelector('[class*="pilgrimDetails_grid-container"]');
 
     let grids;
 
     if (mainContainer) {
         grids = mainContainer.querySelectorAll('div[style*="grid-template-columns: 3fr 1fr 1.5fr 2fr 2fr"]');
     } else if (gridsContainer) {
-        grids = gridsContainer.querySelectorAll(".pilDetails_mainContainer__HPFSL");
+        grids = gridsContainer.querySelectorAll('[class*="pilDetails_mainContainer"]');
     } else {
         console.error("Main container not found");
         return;
@@ -61,7 +61,7 @@ function fillPilgrims(data) {
 
             // Wait for the dropdown options to appear and then select the appropriate one
             setTimeout(() => {
-                const options = document.querySelectorAll('.floatingDropdown_listItem__tU_5x');
+                const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
                 let selectedOption = null;
 
                 options.forEach(option => {
@@ -87,7 +87,7 @@ function fillPilgrims(data) {
 
             // Wait for the dropdown options to appear and then select the appropriate one
             setTimeout(() => {
-                const options = document.querySelectorAll('.floatingDropdown_listItem__tU_5x');
+                const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
                 let selectedOption = null;
 
                 options.forEach(option => {
@@ -127,7 +127,8 @@ function fillPilgrims(data) {
             };
 
             setIdProofNumber();
-        } else {
+        }
+         else {
             console.warn(`Photo ID Number input not found or is disabled for pilgrim ${index + 1}`);
         }
     });
