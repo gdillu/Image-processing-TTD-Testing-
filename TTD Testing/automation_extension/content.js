@@ -10,17 +10,131 @@ function fillPilgrims(data) {
 
     const mainContainer = document.querySelector('[class*="PilgrimDetails_customerDetailsContainer"]');
     const gridsContainer = document.querySelector('[class*="pilgrimDetails_grid-container"]');
+    const generalsContainer = document.querySelector('[class*="pilgrimDetails_flex-container"]');
 
     let grids;
-
+    let generalContainer;
     if (mainContainer) {
         grids = mainContainer.querySelectorAll('div[style*="grid-template-columns: 3fr 1fr 1.5fr 2fr 2fr"]');
     } else if (gridsContainer) {
         grids = gridsContainer.querySelectorAll('[class*="pilDetails_mainContainer"]');
+        generalContainer = generalsContainer.querySelectorAll('[class*="pilgrimDetails_inner-div"]');
     } else {
         console.error("Main container not found");
         return;
     }
+        if(generalContainer){
+        const generalContainerdiv = document.querySelector('[class*="pilgrimDetails_flex-container"]');
+        if (generalContainerdiv) {
+            const emailDiv = generalContainerdiv.querySelector('input[name="pilgrimEmail"]')?.closest('div');
+            const countryDiv = generalContainerdiv.querySelector('input[name="pilgrimCountry"]')?.closest('div');
+            const stateDiv = generalContainerdiv.querySelector('input[name="state"]')?.closest('div');
+            const cityDiv = generalContainerdiv.querySelector('input[name="pilgrimCity"]')?.closest('div');
+            const pincodeDiv = generalContainerdiv.querySelector('input[name="pilgrimPincode"]')?.closest('div');
+            const gothramDiv = generalContainerdiv.querySelector('input[name="pilgrimGothram"]')?.closest('div');
+
+            if (gothramDiv) {
+                const gothramInput = gothramDiv.querySelector('input[name="pilgrimGothram"]');
+                if (gothramInput) {
+                    gothramInput.value = "araku";
+                    gothramInput.autocomplete = "true";
+                    gothramInput.dispatchEvent(new Event('input', { bubbles: true }));
+                } else {
+                    console.warn(`Gothram input not found for pilgrim`);
+                }
+            }
+    
+            if (emailDiv) {
+                const mailInput = emailDiv.querySelector('input[name="pilgrimEmail"]');
+                if (mailInput) {
+                    mailInput.value = data.Email || '';
+                    mailInput.autocomplete = "true";
+                    mailInput.dispatchEvent(new Event('input', { bubbles: true }));
+                } else {
+                    console.warn(`Mail input not found for pilgrim`);
+                }
+            }
+    
+            if (countryDiv) {
+                const pilgrimCountry = countryDiv.querySelector('input[name="pilgrimCountry"]');
+                if (pilgrimCountry) {
+                    pilgrimCountry.click(); // Click to open the dropdown
+    
+                    // Wait for the dropdown options to appear and then select the appropriate one
+                    setTimeout(() => {
+                        const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
+                        let selectedOption = null;
+    
+                        options.forEach(option => {
+                            if (option.innerText === "India") {
+                                selectedOption = option;
+                            }
+                        });
+    
+                        if (selectedOption) {
+                            selectedOption.click(); // Click the desired option
+                        } else {
+                            console.warn(`Country option not found for pilgrim`);
+                        }
+                    }, 500); // Adjust timeout as necessary for the dropdown to appear
+                } else {
+                    console.warn(`Country input not found for pilgrim`);
+                }
+            }
+    
+            if (stateDiv) {
+                const pilgrimState = stateDiv.querySelector('input[name="state"]');
+                if (pilgrimState) {
+                    pilgrimState.click(); // Click to open the dropdown
+    
+                    // Wait for the dropdown options to appear and then select the appropriate one
+                    setTimeout(() => {
+                        const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
+                        let selectedOption = null;
+    
+                        options.forEach(option => {
+                            if (option.innerText === data.State) {
+                                selectedOption = option;
+                            }
+                        });
+    
+                        if (selectedOption) {
+                            selectedOption.click(); // Click the desired option
+                        } else {
+                            console.warn(`State option not found for pilgrim`);
+                        }
+                    }, 500); // Adjust timeout as necessary for the dropdown to appear
+                } else {
+                    console.warn(`State input not found for pilgrim`);
+                }
+            }
+    
+            if (cityDiv) {
+                const cityInput = cityDiv.querySelector('input[name="pilgrimCity"]');
+                if (cityInput) {
+                    cityInput.value = data.City || '';
+                    cityInput.autocomplete = "true";
+                    cityInput.dispatchEvent(new Event('input', { bubbles: true }));
+                } else {
+                    console.warn(`City input not found for pilgrim`);
+                }
+            }
+    
+            if (pincodeDiv) {
+                const pinInput = pincodeDiv.querySelector('input[name="pilgrimPincode"]');
+                if (pinInput) {
+                    pinInput.value = data.Pincode || '';
+                    pinInput.autocomplete = "true";
+                    pinInput.dispatchEvent(new Event('input', { bubbles: true }));
+                } else {
+                    console.warn(`Pincode input not found for pilgrim`);
+                }
+            }
+        } else {
+            console.warn('General container not found');
+        }
+    
+        }
 
     if (grids.length < data.pilgrims.length) {
         console.warn("Not enough grids to fill all pilgrim details");

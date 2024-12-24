@@ -14,12 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 Age: age,
                 Gender: gender,
                 "Photo ID Proof": idProof,
-                "Photo Id Number": idNumber
+                "Photo Id Number": idNumber,
             });
         });
 
         const data = {
             pilgrims,
+            Email: document.querySelector('.email') ? document.querySelector('.email').value : '',
+            City: document.querySelector('.city') ? document.querySelector('.city').value : '',
+            Pincode: document.querySelector('.pincode') ? document.querySelector('.pincode').value : '',
+            State: document.querySelector('.state') ? document.querySelector('.state').value : ''
         };
 
         // Save data to localStorage
@@ -55,7 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
         pilgrimsDiv.appendChild(pilgrimDiv);
     });
 
-    // Load data from localStorage
+    document.getElementById('add-general').addEventListener('click', () => {
+        const generalDetailsDiv = document.getElementById('general');
+        generalDetailsDiv.innerHTML = `
+            <input type="email" class="email" placeholder="Email">
+            <input type="text" class="city" placeholder="City">
+            <input type="text" class="pincode" placeholder="Pincode">
+            <input type="text" class="state" placeholder="State">
+        `;
+    });
+
     const savedData = JSON.parse(localStorage.getItem('automationData'));
     if (savedData) {
 
@@ -89,7 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 Gender: element.querySelector('.gender').value,
                 "Photo ID Proof": element.querySelector('.id-proof').value,
                 "Photo Id Number": element.querySelector('.id-number').value
-            }))
+            })),
+            Email: document.querySelector('.email') ? document.querySelector('.email').value : '',
+            City: document.querySelector('.city') ? document.querySelector('.city').value : '',
+            Pincode: document.querySelector('.pincode') ? document.querySelector('.pincode').value : '',
+            State: document.querySelector('.state') ? document.querySelector('.state').value : ''
+
         };
         localStorage.setItem('automationData', JSON.stringify(data));
         alert('Data saved successfully!');
@@ -120,6 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 pilgrimsDiv.appendChild(pilgrimDiv);
             });
+        const generalDetailsDiv = document.getElementById('general');
+        generalDetailsDiv.innerHTML = `
+            <input type="email" class="email" placeholder="Email" value="${savedData.Email}">
+            <input type="text" class="city" placeholder="City" value="${savedData.City}">
+            <input type="text" class="pincode" placeholder="Pincode" value="${savedData.Pincode}">
+            <input type="text" class="state" placeholder="State" value="${savedData.State}">
+        `;
             alert('Data loaded successfully!');
         } else {
             alert('No saved data found.');
@@ -130,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('reset').addEventListener('click', () => {
         localStorage.removeItem('automationData');
         document.getElementById('pilgrims').innerHTML = ''; // Clear pilgrims
+        document.getElementById('general').innerHTML = '';
         alert('Data reset successfully!');
     });
 
