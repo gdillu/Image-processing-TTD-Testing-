@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilgrims Booking Form</title>
+  <script src="pop_up.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; }
+    label { display: block; margin: 8px 0; }
+    input, select { width: 100%; padding: 8px; margin: 5px 0; }
+    button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <h1>Pilgrims Booking Form</h1>
+  <form id="booking-form">
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" required>
+
+    <label for="service">Service</label>
+    <select id="service" name="service" required>
+        <option value="angapradakshinam">Angapradakshinam</option>
+        <option value="special_entry_darshan">Special Entry Darshan</option>
+        <option value="Special Entry Darshan (Ammavari Temple)">SED(Ammavari)</option>
+    </select>
+
+    <label for="date">Date</label>
+<input type="text" id="date" name="date" value="27 December 2024" required style="width: 150px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+<div style="display: inline-block; margin-left: 10px;">
+    <button type="button" onclick="toggleCalendar()" style="padding: 5px; background-color: #1abc9c; color: white; border: none; border-radius: 4px;">📅</button>
+</div>
+
+<div id="calendar" style="display:none; position:absolute; background-color:white; border:1px solid #ccc; border-radius:4px; padding:10px;">
+    <div style="text-align:center;">
+        <span id="monthYear"></span><br>
+        <button onclick="prevMonth()">❮</button>
+        <button onclick="nextMonth()">❯</button>
+    </div>
+    <div style="display:flex; justify-content: space-between;">
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+        <div>Su</div>
+    </div>
+    <div id="days" style="display:flex; flex-wrap:wrap;"></div>
+</div>
+
+<script>
+let currentDate = new Date();
+let selectedDate = new Date(currentDate);
+
+function renderCalendar() {
+    const monthYear = document.getElementById('monthYear');
+    const daysContainer = document.getElementById('days');
+    daysContainer.innerHTML = '';
+
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    
+    monthYear.innerText = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay - 1; i++) {
+        daysContainer.innerHTML += '<div style="width:14.28%; height:40px;"></div>'; // Empty cells
+    }
+
+    for (let date = 1; date <= lastDate; date++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.style.width = '14.28%';
+        dayDiv.style.height = '40px';
+        dayDiv.style.textAlign = 'center';
+        dayDiv.style.lineHeight = '40px';
+        dayDiv.style.cursor = 'pointer';
+        
+        dayDiv.innerText = date;
+        
+        if (date === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+            dayDiv.style.backgroundColor = '#1abc9c';
+            dayDiv.style.color = 'white';
+        }
+
+        dayDiv.onclick = function() {
+            selectedDate.setDate(date);
+            document.getElementById('date').value = formatSelectedDate(selectedDate);
+            toggleCalendar();
+            renderCalendar();
+        };
+
+        daysContainer.appendChild(dayDiv);
+    }
+}
+
+function formatSelectedDate(date) {
+    // Format the date as "6 December 2024"
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleString('en-GB', options).replace(',', '');
+}
+
+function toggleCalendar() {
+    const calendar = document.getElementById('calendar');
+    calendar.style.display = calendar.style.display === 'none' ? 'block' : 'none';
+    if (calendar.style.display === 'block') {
+        renderCalendar();
+    }
+}
+
+function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+}
+</script>
+
+    
+
+
+    <label for="time">Time</label>
+    <input type="text" id="time" name="time" value="7:00 am" required>
+
+    <h3>Pilgrim Details</h3>
+    <div id="pilgrim-container">
+      <!-- Pilgrim Details will go here -->
+    </div>
+
+    <button type="button" id="add-pilgrim">Add Pilgrim</button>
+    <label for="upi">UPI</label>
+    <input type="text" id="upi" name="UPI" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="popup.js"></script>
+</body>
+</html>

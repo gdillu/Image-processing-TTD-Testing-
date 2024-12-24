@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilgrims Booking Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 10px; width: 300px; }
+        label { display: block; margin: 8px 0; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0; }
+        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Pilgrims Booking Form</h1>
+    <form id="booking-form">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="service">Service</label>
+        <select id="service" name="service" required>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="service">Service</label>
+        <select id="service" name="service" required>
+            <option value="angapradakshinam">Angapradakshinam</option>
+            <option value="special_entry_darshan">Special Entry Darshan</option>
+            <option value="Special Entry Darshan (Ammavari Temple)">SED(Ammavari)</option>
+        </select>
+
+        <label for="date">Date</label>
+        <input type="text" id="date" name="date" value="27 December 2024" required readonly style="width: 150px;">
+        
+        <label for="time">Time</label>
+        <input type="text" id="time" name="time" value="7:00 am" required>
+
+        <h3>Pilgrim Details</h3>
+        <div id="pilgrim-container">
+          <!-- Pilgrim Details will go here -->
+        </div>
+
+        <button type="button" id="add-pilgrim">Add Pilgrim</button>
+
+        <label for="upi">UPI</label>
+        <input type="text" id="upi" name="UPI" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Optional script to handle adding pilgrims -->
+    
+</body>
+</html>

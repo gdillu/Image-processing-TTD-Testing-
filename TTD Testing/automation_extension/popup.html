@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Popup</title>
+    <script src="popup.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background-color: #f4f4f4;
+            width: 500px;
+            height: 500px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #pilgrims {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TTD passenger Form</h1>
+    <div id="pilgrims"></div>
+    <button id="add-pilgrim">Add Pilgrim</button>
+    <button id="start-automation">Fill Form</button>
+    <button id="save">Save</button>
+    <button id="load">Load</button>
+    <button id="reset">Reset</button>
+</body>
+</html>
