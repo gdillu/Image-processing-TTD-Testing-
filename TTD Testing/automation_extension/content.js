@@ -1,6 +1,3 @@
-
-
-
 function enableAutocompleteForFloatingInputs() {
     const inputs = document.querySelectorAll('input.floating-input');
     inputs.forEach(input => {
@@ -8,16 +5,22 @@ function enableAutocompleteForFloatingInputs() {
     });
 }
 
-enableAutocompleteForFloatingInputs();
 function fillPilgrims(data) {
-    const mainContainer = document.querySelector('.PilgrimDetails_customerDetailsContainer__CQvI0');
+    enableAutocompleteForFloatingInputs();
 
-    if (!mainContainer) {
+    const mainContainer = document.querySelector('.PilgrimDetails_customerDetailsContainer__CQvI0');
+    const gridsContainer = document.querySelector(".pilgrimDetails_grid-container__qwPRx");
+
+    let grids;
+
+    if (mainContainer) {
+        grids = mainContainer.querySelectorAll('div[style*="grid-template-columns: 3fr 1fr 1.5fr 2fr 2fr"]');
+    } else if (gridsContainer) {
+        grids = gridsContainer.querySelectorAll(".pilDetails_mainContainer__HPFSL");
+    } else {
         console.error("Main container not found");
         return;
     }
-
-    const grids = mainContainer.querySelectorAll('div[style*="grid-template-columns: 3fr 1fr 1.5fr 2fr 2fr"]');
 
     if (grids.length < data.pilgrims.length) {
         console.warn("Not enough grids to fill all pilgrim details");
@@ -32,18 +35,17 @@ function fillPilgrims(data) {
         const grid = grids[index];
 
         // Fill Name input
-        const nameInput = grid.querySelector(`input[name="fname"]`);
+        const nameInput = grid.querySelector('input[name="fname"]') || grid.querySelector('input[name="name"]');
         if (nameInput) {
             nameInput.value = pilgrim.Name || '';
             nameInput.autocomplete = "true";
             nameInput.dispatchEvent(new Event('input', { bubbles: true }));
-            
         } else {
             console.warn(`Name input not found for pilgrim ${index + 1}`);
         }
 
         // Fill Age input
-        const ageInput = grid.querySelector(`input[name="age"]`);
+        const ageInput = grid.querySelector('input[name="age"]');
         if (ageInput) {
             ageInput.value = pilgrim.Age || '';
             ageInput.autocomplete = "true";
@@ -53,10 +55,9 @@ function fillPilgrims(data) {
         }
 
         // Fill Gender dropdown
-        const genderInput = grid.querySelector(`input[name="gender"]`);
+        const genderInput = grid.querySelector('input[name="gender"]');
         if (genderInput) {
             genderInput.click(); // Click to open the dropdown
-            
 
             // Wait for the dropdown options to appear and then select the appropriate one
             setTimeout(() => {
@@ -71,7 +72,6 @@ function fillPilgrims(data) {
 
                 if (selectedOption) {
                     selectedOption.click(); // Click the desired option
-                    
                 } else {
                     console.warn(`Gender option not found for pilgrim ${index + 1}`);
                 }
@@ -81,7 +81,7 @@ function fillPilgrims(data) {
         }
 
         // Fill Photo ID Proof dropdown
-        const idInput = grid.querySelector(`input[name="photoIdType"]`);
+        const idInput = grid.querySelector('input[name="photoIdType"]') || grid.querySelector('input[name="idType"]');
         if (idInput) {
             idInput.click(); // Click to open the dropdown
 
@@ -98,7 +98,6 @@ function fillPilgrims(data) {
 
                 if (selectedOption) {
                     selectedOption.click(); // Click the desired option
-                    
                 } else {
                     console.warn(`Photo ID Proof option not found for pilgrim ${index + 1}`);
                 }
@@ -108,20 +107,28 @@ function fillPilgrims(data) {
         }
 
         // Fill Photo ID Number input
-        const idProofNumberInput = grid.querySelector(`input[name="idProofNumber"]`);
+        const idProofNumberInput = grid.querySelector('input[name="idProofNumber"]') || grid.querySelector('input[name="idNumber"]');
         if (idProofNumberInput) {
-            idProofNumberInput.value = '';
-            idProofNumberInput
-            idProofNumberInput.value = pilgrim["Photo Id Number"] + '0' || '';
-            if(idProofNumberInput.value .length > 12){
-                idProofNumberInput.value = idProofNumberInput.value.slice(0, 13);
-            }
-            idProofNumberInput.autocomplete = "true";
-            idProofNumberInput.dispatchEvent(new Event('input', { bubbles: true }));
-            idProofNumberInput.dispatchEvent(new Event('change', { bubbles: true }));
+            const setIdProofNumber = () => {
+                idProofNumberInput.value = pilgrim["Photo Id Number"] + '0' || '';
+                if (idProofNumberInput.value.length > 12) {
+                    idProofNumberInput.value = idProofNumberInput.value.slice(0, 12);
+                }
+                idProofNumberInput.autocomplete = "true";
+                idProofNumberInput.dispatchEvent(new Event('input', { bubbles: true }));
+                idProofNumberInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                // Verify the value is set after a short delay
+                setTimeout(() => {
+                    if (idProofNumberInput.value !== pilgrim["Photo Id Number"] + '0') {
+                        setIdProofNumber();
+                    }
+                }, 500); // Adjust the delay as necessary
+            };
+
+            setIdProofNumber();
         } else {
             console.warn(`Photo ID Number input not found or is disabled for pilgrim ${index + 1}`);
         }
     });
 }
-

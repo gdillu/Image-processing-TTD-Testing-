@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const data = {
             pilgrims,
-            // Example UPI, can be made dynamic
         };
 
         // Save data to localStorage
@@ -135,8 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function startAutomation(data) {
-        // This function will be executed in the context of the web page
-        // Call the performLogin, selectService, selectDate, and fillPilgrims functions here
         window.fillPilgrims(data)
     }
 });
