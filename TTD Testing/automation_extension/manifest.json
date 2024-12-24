@@ -2,17 +2,20 @@
   "manifest_version": 3,
   "name": "Automation Extension",
   "version": "1.0",
-  "description": "Automates tasks on the TTD Devasthanams website.",
+  "description": "Fill Piligrim form fields",
   "permissions": [
     "activeTab",
     "scripting"
   ],
+  "icons":{
+    "32":"download.jpg"
+  },
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
-    "default_js":"popup.js"
+    "default_script": "popup.js"
   },
   "content_scripts": [
     {
