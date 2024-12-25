@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reset button functionality
     document.getElementById('reset').addEventListener('click', () => {
         localStorage.removeItem('automationData');
+        sessionStorage.removeItem('automationData');
         document.getElementById('pilgrims').innerHTML = ''; // Clear pilgrims
         document.getElementById('general').innerHTML = '';
         alert('Data reset successfully!');
