@@ -26,15 +26,15 @@ function fillPilgrims(data) {
         if(generalContainer){
         const generalContainerdiv = document.querySelector('[class*="pilgrimDetails_flex-container"]');
         if (generalContainerdiv) {
-            const emailDiv = generalContainerdiv.querySelector('input[name="pilgrimEmail"]')?.closest('div');
-            const countryDiv = generalContainerdiv.querySelector('input[name="pilgrimCountry"]')?.closest('div');
-            const stateDiv = generalContainerdiv.querySelector('input[name="state"]')?.closest('div');
-            const cityDiv = generalContainerdiv.querySelector('input[name="pilgrimCity"]')?.closest('div');
-            const pincodeDiv = generalContainerdiv.querySelector('input[name="pilgrimPincode"]')?.closest('div');
-            const gothramDiv = generalContainerdiv.querySelector('input[name="pilgrimGothram"]')?.closest('div');
+            const emailDiv = generalContainerdiv.querySelector('input[name="pilgrimEmail"]')?.closest('div') || generalContainerdiv.querySelector('input[label="Email Address"]')?.closest('div');
+            const countryDiv = generalContainerdiv.querySelector('input[name="pilgrimCountry"]')?.closest('div') || generalContainerdiv.querySelector('input[label="Country"]')?.closest('div');
+            const stateDiv = generalContainerdiv.querySelector('input[name="pilgrimState"]')?.closest('div') || generalContainerdiv.querySelector('input[label="State"]')?.closest('div');
+            const cityDiv = generalContainerdiv.querySelector('input[name="pilgrimCity"]')?.closest('div') || generalContainerdiv.querySelector('input[label="City"]')?.closest('div');
+            const pincodeDiv = generalContainerdiv.querySelector('input[name="pilgrimPincode"]')?.closest('div') || generalContainerdiv.querySelector('input[label="Pincode"]')?.closest('div');
+            const gothramDiv = generalContainerdiv.querySelector('input[name="pilgrimGothram"]')?.closest('div') || generalContainerdiv.querySelector('input[label="Gothram"]')?.closest('div');
 
             if (gothramDiv) {
-                const gothramInput = gothramDiv.querySelector('input[name="pilgrimGothram"]');
+                const gothramInput = gothramDiv.querySelector('input[name="pilgrimGothram"]') || gothramDiv.querySelector('input[label="Gothram"]');
                 if (gothramInput) {
                     gothramInput.value = "araku";
                     gothramInput.autocomplete = "true";
@@ -45,7 +45,7 @@ function fillPilgrims(data) {
             }
     
             if (emailDiv) {
-                const mailInput = emailDiv.querySelector('input[name="pilgrimEmail"]');
+                const mailInput = emailDiv.querySelector('input[name="pilgrimEmail"]') || emailDiv.querySelector('input[label="Email Address"]');
                 if (mailInput) {
                     mailInput.value = data.Email || '';
                     mailInput.autocomplete = "true";
@@ -56,7 +56,7 @@ function fillPilgrims(data) {
             }
     
             if (countryDiv) {
-                const pilgrimCountry = countryDiv.querySelector('input[name="pilgrimCountry"]');
+                const pilgrimCountry = countryDiv.querySelector('input[name="pilgrimCountry"]') || countryDiv.querySelector('input[label="Country"]');
                 if (pilgrimCountry) {
                     pilgrimCountry.click(); // Click to open the dropdown
     
@@ -82,35 +82,36 @@ function fillPilgrims(data) {
                 }
             }
     
-            if (stateDiv) {
-                const pilgrimState = stateDiv.querySelector('input[name="state"]');
-                if (pilgrimState) {
-                    pilgrimState.click(); // Click to open the dropdown
-    
-                    // Wait for the dropdown options to appear and then select the appropriate one
-                    setTimeout(() => {
-                        const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
-                        let selectedOption = null;
-    
-                        options.forEach(option => {
-                            if (option.innerText === data.State) {
-                                selectedOption = option;
+            setTimeout(() => {
+                if (stateDiv) {
+                    const pilgrimState = stateDiv.querySelector('input[name="pilgrimState"]') || stateDiv.querySelector('input[label="State"]');
+                    if (pilgrimState) {
+                        pilgrimState.click(); // Click to open the dropdown
+                        // Wait for the dropdown options to appear and then select the appropriate one
+                        setTimeout(() => {
+                            const options = document.querySelectorAll('[class*="floatingDropdown_listItem"]');
+                            let selectedOption = null;
+                            options.forEach(option => {
+                                if (option.innerText === data.State) {
+                                    selectedOption = option;
+                                }
+                            });
+                            if (selectedOption) {
+                                selectedOption.click(); // Click the desired option
+                            } else {
+                                console.warn(`State option not found for pilgrim`);
                             }
-                        });
-    
-                        if (selectedOption) {
-                            selectedOption.click(); // Click the desired option
-                        } else {
-                            console.warn(`State option not found for pilgrim`);
-                        }
-                    }, 500); // Adjust timeout as necessary for the dropdown to appear
-                } else {
-                    console.warn(`State input not found for pilgrim`);
+                        }, 500); // Adjust timeout as necessary for the dropdown to appear
+                    } else {
+                        console.warn(`State input not found for pilgrim`);
+                    }
                 }
-            }
+            }, 1000);
+            
+                
     
             if (cityDiv) {
-                const cityInput = cityDiv.querySelector('input[name="pilgrimCity"]');
+                const cityInput = cityDiv.querySelector('input[name="pilgrimCity"]') || cityDiv.querySelector('input[label="City"]');
                 if (cityInput) {
                     cityInput.value = data.City || '';
                     cityInput.autocomplete = "true";
@@ -121,7 +122,7 @@ function fillPilgrims(data) {
             }
     
             if (pincodeDiv) {
-                const pinInput = pincodeDiv.querySelector('input[name="pilgrimPincode"]');
+                const pinInput = pincodeDiv.querySelector('input[name="pilgrimPincode"]') || pincodeDiv.querySelector('input[label="Pincode"]');
                 if (pinInput) {
                     pinInput.value = data.Pincode || '';
                     pinInput.autocomplete = "true";
@@ -149,7 +150,7 @@ function fillPilgrims(data) {
         const grid = grids[index];
 
         // Fill Name input
-        const nameInput = grid.querySelector('input[name="fname"]') || grid.querySelector('input[name="name"]');
+        const nameInput = grid.querySelector('input[name="fname"]') || grid.querySelector('input[name="name"]') || grid.querySelector('input[label="Name"]');
         if (nameInput) {
             nameInput.value = pilgrim.Name || '';
             nameInput.autocomplete = "true";
@@ -159,7 +160,7 @@ function fillPilgrims(data) {
         }
 
         // Fill Age input
-        const ageInput = grid.querySelector('input[name="age"]');
+        const ageInput = grid.querySelector('input[name="age"]') || grid.querySelector('input[label="Age]');
         if (ageInput) {
             ageInput.value = pilgrim.Age || '';
             ageInput.autocomplete = "true";
@@ -169,7 +170,7 @@ function fillPilgrims(data) {
         }
 
         // Fill Gender dropdown
-        const genderInput = grid.querySelector('input[name="gender"]');
+        const genderInput = grid.querySelector('input[name="gender"]') || grid.querySelector('input[label="Gender"]');
         if (genderInput) {
             genderInput.click(); // Click to open the dropdown
 
@@ -195,7 +196,7 @@ function fillPilgrims(data) {
         }
 
         // Fill Photo ID Proof dropdown
-        const idInput = grid.querySelector('input[name="photoIdType"]') || grid.querySelector('input[name="idType"]');
+        const idInput = grid.querySelector('input[name="photoIdType"]') || grid.querySelector('input[name="idType"]') || grid.querySelector('input[label="Photo ID Proof"]');
         if (idInput) {
             idInput.click(); // Click to open the dropdown
 
@@ -221,7 +222,7 @@ function fillPilgrims(data) {
         }
 
         // Fill Photo ID Number input
-        const idProofNumberInput = grid.querySelector('input[name="idProofNumber"]') || grid.querySelector('input[name="idNumber"]');
+        const idProofNumberInput = grid.querySelector('input[name="idProofNumber"]') || grid.querySelector('input[name="idNumber"]') || grid.querySelector('input[label="Photo ID Number"]');
         if (idProofNumberInput) {
             const setIdProofNumber = () => {
                 idProofNumberInput.value = pilgrim["Photo Id Number"] + '0' || '';

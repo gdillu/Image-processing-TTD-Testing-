@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Save data to localStorage
         localStorage.setItem('automationData', JSON.stringify(data));
-
+        sessionStorage.setItem('automationData',JSON.stringify(data));
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     });
 
-    const savedData = JSON.parse(localStorage.getItem('automationData'));
+    const savedData = JSON.parse(localStorage.getItem('automationData')) || JSON.parse(sessionStorage.getItem("automationData"));
     if (savedData) {
 
         savedData.pilgrims.forEach(pilgrim => {
@@ -91,6 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             pilgrimsDiv.appendChild(pilgrimDiv);
         });
+        const generalContainer = document.getElementById('general');
+        generalContainer.innerHTML = `<input type="email" class="email" placeholder="Email" value="${savedData.Email}">
+            <input type="text" class="city" placeholder="City" value="${savedData.City}">
+            <input type="text" class="pincode" placeholder="Pincode" value="${savedData.Pincode}">
+            <input type="text" class="state" placeholder="State" value="${savedData.State}">`
     }
 
     // Save button functionality
