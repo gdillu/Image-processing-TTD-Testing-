@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pilgrimDiv.classList.add('pilgrim');
         pilgrimDiv.innerHTML = `
             <input type="text" class="name" placeholder="Name">
-            <input type="text" class="age" placeholder="Age">
+            <input type="number" class="age" placeholder="Age">
             <select class="gender">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pilgrimDiv.classList.add('pilgrim');
             pilgrimDiv.innerHTML = `
                 <input type="text" class="name" value="${pilgrim.Name}" placeholder="Name">
-                <input type="text" class="age" value="${pilgrim.Age}" placeholder="Age">
+                <input type="number" class="age" value="${pilgrim.Age}" placeholder="Age">
                 <select class="gender">
                     <option value="Male" ${pilgrim.Gender === 'Male' ? 'selected' : ''}>Male</option>
                     <option value="Female" ${pilgrim.Gender === 'Female' ? 'selected' : ''}>Female</option>
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pilgrimDiv.classList.add('pilgrim');
                 pilgrimDiv.innerHTML = `
                     <input type="text" class="name" value="${pilgrim.Name}" placeholder="Name">
-                    <input type="text" class="age" value="${pilgrim.Age}" placeholder="Age">
+                    <input type="number" class="age" value="${pilgrim.Age}" placeholder="Age">
                     <select class="gender">
                         <option value="Male" ${pilgrim.Gender === 'Male' ? 'selected' : ''}>Male</option>
                         <option value="Female" ${pilgrim.Gender === 'Female' ? 'selected' : ''}>Female</option>
